@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/datapimp/sidecar"
   gem.license = "MIT"
   gem.summary = %Q{sidecar is a development utility for rails}
-  gem.description = %Q{sidecar is a development utility for rails}
+  gem.description = %Q{sidecar is a development utility for rails which runs tests, javascript, css, and ruby code}
   gem.email = "jonathan.soeder@gmail.com"
   gem.authors = ["Jonathan Soeder"]
   # dependencies defined in Gemfile
@@ -30,24 +30,4 @@ Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
   test.pattern = 'test/**/test_*.rb'
   test.verbose = true
-end
-
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
-end
-
-task :default => :test
-
-require 'rdoc/task'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "sidecar #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
 end

@@ -7,6 +7,6 @@ module Sidecar
       @clients = []
       @projects = []
     end
+
   end
 end
-

@@ -1,7 +1,7 @@
 require 'em-websocket'
 
 module Sidecar
-  module Websocket
+  class Websocket
     def initialize
       EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8080) do |ws|
         ws.onopen    { ws.send "Hello Client!"}
