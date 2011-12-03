@@ -3,7 +3,7 @@
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
     <script>
       $(document).ready(function(){
-        ws = new WebSocket("ws://lvh.me");
+        ws = new WebSocket("ws://lvh.me:8080");
         console.log("Establishing Websocket Connection", ws);
         ws.onmessage = function(evt) { console.log("Message", arguments) };
         ws.onclose = function() { console.log("Close", arguments) };
