@@ -2,7 +2,18 @@
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
+require 'eventmachine'
 require 'sidecar'
 
-Sidecar.run
+arguments = ARGV
+
+command = arguments.first
+
+if command == "start"
+  Sidecar.listen
+elsif command == "stop"
+  Sidecar.quit
+else
+  Sidecar.command( arguments )
+end
 

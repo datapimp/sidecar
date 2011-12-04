@@ -5,6 +5,10 @@ Sidecar is a utility which runs along side your rails server in development.  It
 
 It comes with Vim plugins for highlighting snippets of CSS or Javascript and applying them live in the browser.  It allows you to run single specs / tests from within vim, evalutes ruby code from your editor from inside the running rails environment, etc.
 
+Starting the development server
+===============================
+rackup config.ru -s thin -E production
+
 Contributing to sidecar
 =======================
  

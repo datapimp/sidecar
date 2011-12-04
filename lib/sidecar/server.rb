@@ -1,21 +1,56 @@
 module Sidecar
   class Server
-    attr_accessor :projects, :clients, :websocket, :command_socket
-
+    attr_accessor :adapter, :options
+    
     def initialize options={}
-      #@websocket_server = Sidecar::Websocket.new()    
-      @clients = []
-      @projects = []
+      @options= options
 
-      open_command_socket()
+      options[:mount] ||= "/sidecar"
+      options[:port] ||= 9292 
+
+      @adapter = Faye::RackAdapter.new(:mount => options[:mount], :timeout => 25)
+      
+      yield self if block_given?
+
+      bindings
+      listen
+    end
+    
+    protected
+    
+    
+    def server
+      this
+    end
+    
+    def on_asset client_id=nil, data=nil
+      puts "On Asset. #{ client_id } #{ data }"
+    end
+  
+    def on_publish channel, client_id=nil, data=nil
+      if @callbacks[channel] and @callbacks[channel].respond_to?(:call)
+        @callbacks[channel].call( client_id, data )
+      end
     end
 
-    def open_command_socket()
-      puts "Attempting to open command socket"
-      EventMachine::run {
-        EventMachine::start_server "127.0.0.1", 8080, Sidecar::CommandSocket
-      }
+    def bindings
+      bind(:publish) do |client_id, channel, data| 
+        puts "#{ client_id } #{ channel } #{ data }"
+        channel.gsub! /^\//, '' 
+        server.respond_to?("on_#{ channel }") ? server.send("on_#{ channel }", client_id, data) : server.send("on_publish",channel, client_id, data)
+      end
+
+      bind :disconnect do
+        puts "disconected"
+      end
+    end
+    
+    def bind event, &block
+      @adapter.bind event, &block
     end
 
+    def listen
+      @adapter.listen( options[:port] )
+    end
   end
 end

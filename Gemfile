@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
+gem 'faye'
 gem 'eventmachine'
-gem 'em-websocket'
 
 group :development do
   gem "shoulda", ">= 0"
