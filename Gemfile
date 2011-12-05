@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 gem 'faye'
 gem 'eventmachine'
+gem 'optparse'
 
 group :development do
   gem "shoulda", ">= 0"

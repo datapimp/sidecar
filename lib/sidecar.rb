@@ -8,6 +8,8 @@ require 'sidecar/handler'
 require 'sidecar/server'
 
 module Sidecar
+  VERSION = "0.0.1.alpha"
+
   def self.command arguments=[]
     Sidecar::Command.execute( arguments )
   end
