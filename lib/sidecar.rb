@@ -2,8 +2,10 @@ require 'rubygems'
 require 'bundler'
 require 'faye'
 
-require 'sidecar/server'
+require 'sidecar/adapter'
 require 'sidecar/command'
+require 'sidecar/handler'
+require 'sidecar/server'
 
 module Sidecar
   def self.command arguments=[]
@@ -15,8 +17,21 @@ module Sidecar
   end
 
   def self.listen options={}
-    Sidecar::Server.new(options) do |sidecar|
-      puts "Starting Sidecar..."
+    server=Sidecar::Server.new(options) do |sidecar|
+      puts "Configuring Sidecar"
+      # tap into the monitoring api for debugging purposes
+      sidecar.bind(:publish) do |client_id, channel, data| 
+        puts "#{ client_id } published to #{ channel }: #{ data }"
+      end
+
+      sidecar.bind(:subscribe) do |client_id, channel| 
+        puts "client #{ client_id } subscribed to #{ channel }"
+      end
+
+      sidecar.bind(:connect) { puts "Client COnnected" }
+      sidecar.bind(:disconnect) { puts "Client COnnected" }
     end
+
+    server.listen()
   end
 end
