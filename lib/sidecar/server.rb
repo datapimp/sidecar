@@ -8,8 +8,6 @@ module Sidecar
       options[:mount] ||= "/sidecar"
       options[:port] ||= 9292 
       
-      puts "Creating Server"
-
       @adapter = Faye::RackAdapter.new(:mount => options[:mount], :timeout => 25 )
 
       yield(self) if block_given?

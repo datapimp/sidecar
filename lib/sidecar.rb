@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler'
-require 'faye'
+
+Bundler.require(:default)
 
 require 'sidecar/adapter'
 require 'sidecar/command'

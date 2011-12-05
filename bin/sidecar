@@ -2,9 +2,29 @@
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
-require 'eventmachine'
+# http://www.ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
+require 'optparse'
 require 'sidecar'
 
-arguments = ARGV || []
+options = {:command=>ARGV.shift}
 
-Sidecar::Command.execute( arguments )
+def parse_command_line_options(args)
+  opts = OptionParser.new(opts) do |opts|
+    opts.banner = "Usage: sidecar [command] [options] [assets]"
+    
+    opts.on_tail("-h","--help","You're looking at it") do
+      puts opts
+      exit
+    end
+
+    opts.on_tail("-v","--version","Displays the version") do
+      puts Sidecar::VERSION
+      exit
+    end
+  end
+
+  opts.parse!( args )
+end
+
+explicit_config = parse_command_line_options( ARGV )
+
