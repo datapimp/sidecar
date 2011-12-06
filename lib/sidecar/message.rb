@@ -10,6 +10,10 @@ module Sidecar
       route
       send
     end
+    
+    def message
+      self
+    end
 
     def send
       if send_to_server?
@@ -43,7 +47,13 @@ module Sidecar
     end
 
     def server
-      @server ||= Sidecar::Server.new( options )
+      @server ||= Sidecar::Server.new( options ) do |server|
+        if message.debug?
+          server.bind(:publish) do |client_id, channel_id, message|
+            puts "Client Id #{ client_id } #{ channel_id } #{ message.inspect }" 
+          end
+        end
+      end
     end
 
     def send_to_server?

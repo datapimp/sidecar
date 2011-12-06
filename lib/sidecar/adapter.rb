@@ -5,7 +5,7 @@ module Sidecar
 
       if options.is_a?(Hash)
         options[:extensions] ||= []
-        options[:extensions] << Sidecar::Handler.new
+        options[:extensions] << Sidecar::Handler.new(options)
       end
 
       super(app, options)

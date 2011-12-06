@@ -25,13 +25,16 @@ Options:
 
     def parse_options
       @options = {
-        :message_type  => nil,
-        :contents      => nil,
-        :config_path   => nil,
-        :channel       => "client"
+        :message_type   => nil,
+        :contents       => nil,
+        :config_path    => nil,
+        :base_url       => nil,
+        :root_directory => nil,
+        :channel        => "client"
       }
 
       @option_parser = OptionParser.new do |opts|
+        opts.on('-r','--root',)
         opts.on('-d','--debug','Enable debugging mode') do
           @options[:debug] = true
         end

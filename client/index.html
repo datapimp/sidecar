@@ -10,15 +10,9 @@
       $(document).ready(function(){
         var client = new Faye.Client('http://localhost:9292/sidecar'); 
 
-        client.subscribe('/blah', function(message) {
-          console.log("Subscription to /blah", message )
+        client.subscribe('/assets', function(message) {
+          console.log("Assets", message )
         });
-        
-        for(var i=1; i <= 11; i++){
-          setTimeout(function(){
-            client.publish("/blah", "sidecar sample client");
-          }, 3000 * i) 
-        }
       });
     </script>
   </body>
