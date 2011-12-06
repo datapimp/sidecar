@@ -24,5 +24,15 @@ module Sidecar
     def listen
       @adapter.listen( options[:port] )
     end
+
+    def start *args
+      puts "Listening" if debug?
+      listen
+    end
+
+    def debug?
+      options[:debug]
+    end
+
   end
 end

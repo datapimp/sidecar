@@ -20,16 +20,26 @@ Options:
 
     def initialize
       parse_options
-      puts "Running sidecar with #{ @options.inspect }"
+      Sidecar::Message.new(@options)
     end
 
     def parse_options
       @options = {
         :message_type  => nil,
-        :contents      => nil
+        :contents      => nil,
+        :config_path   => nil,
+        :channel       => "client"
       }
 
       @option_parser = OptionParser.new do |opts|
+        opts.on('-d','--debug','Enable debugging mode') do
+          @options[:debug] = true
+        end
+
+        opts.on('-c','--config PATH','Path to sidecar.yml') do |config_path|
+          @options[:config_path] = config_path
+        end
+
         opts.on('-a', '--assets LIST','List of files to evaluate in the target environment') do |assets|
           @options[:contents] = assets
         end
@@ -39,9 +49,14 @@ Options:
           exit
         end
       end
+      
+      arguments = ARGV.dup
+      
+      @options[:channel] = arguments[0]
+      @options[:message_type] = arguments[1]
 
       @option_parser.banner = BANNER
-      @option_parser.parse!(ARGV)
+      @option_parser.parse!(arguments)
     end
   end
 end

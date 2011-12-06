@@ -2,7 +2,6 @@ source "http://rubygems.org"
 
 gem 'faye'
 gem 'eventmachine'
-gem 'livereload'
 
 group :development do
   #gem "shoulda", ">= 0"

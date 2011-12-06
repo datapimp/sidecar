@@ -6,6 +6,8 @@ Bundler.require(:default)
 require 'sidecar/adapter'
 require 'sidecar/handler'
 require 'sidecar/server'
+require 'sidecar/client'
+require 'sidecar/message'
 
 module Sidecar
   VERSION = "0.0.1.alpha"
