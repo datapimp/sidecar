@@ -1,30 +1,8 @@
-#!/usr/bin/env ruby
-
+#!/usr/bin/env ruby -rrubygems
+#
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
-# http://www.ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
-require 'optparse'
 require 'sidecar'
+require "#{File.dirname(__FILE__)}/../lib/sidecar/command_line.rb"
 
-options = {:command=>ARGV.shift}
-
-def parse_command_line_options(args)
-  opts = OptionParser.new(opts) do |opts|
-    opts.banner = "Usage: sidecar [command] [options] [assets]"
-    
-    opts.on_tail("-h","--help","You're looking at it") do
-      puts opts
-      exit
-    end
-
-    opts.on_tail("-v","--version","Displays the version") do
-      puts Sidecar::VERSION
-      exit
-    end
-  end
-
-  opts.parse!( args )
-end
-
-explicit_config = parse_command_line_options( ARGV )
-
+Sidecar::CommandLine.new

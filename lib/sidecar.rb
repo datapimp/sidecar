@@ -4,7 +4,6 @@ require 'bundler'
 Bundler.require(:default)
 
 require 'sidecar/adapter'
-require 'sidecar/command'
 require 'sidecar/handler'
 require 'sidecar/server'
 
