@@ -1,14 +1,13 @@
 module Sidecar
   class Adapter < Faye::RackAdapter
-    def new(app = nil, options = nil)
-      puts "Creating Sidecar Rack Adapter"
+    def initialize(app = nil, options = nil)
+      @app      = app if app.respond_to?(:call)
+      @options  = [app, options].grep(Hash).first || {}
+ 
+      @options[:extensions] ||= []
+      @options[:extensions] << Sidecar::Handler.new(options)
 
-      if options.is_a?(Hash)
-        options[:extensions] ||= []
-        options[:extensions] << Sidecar::Handler.new
-      end
-
-      super(app, options)
+      super(app, @options)
     end
   end
 end

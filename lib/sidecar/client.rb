@@ -1,3 +1,5 @@
+require 'eventmachine'
+
 module Sidecar
   class Client
     attr_accessor :faye
@@ -6,9 +8,23 @@ module Sidecar
       @faye = Faye::Client.new("http://localhost:9292/sidecar")
     end
 
-    def method_missing m, *args
-      puts "m = #{ m }" 
-      puts args.inspect
+    def client
+      self
+    end
+    
+    def load assets, options={}
+      assets = options[:contents] || assets
+      publish("/assets", assets )
+    end
+    
+    def reactor
+      EM
+    end
+
+    def publish channel, message
+      reactor.run do
+        client.faye.publish(channel, message)
+      end
     end
   end
 end

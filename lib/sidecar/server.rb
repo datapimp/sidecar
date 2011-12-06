@@ -8,8 +8,8 @@ module Sidecar
       options[:mount] ||= "/sidecar"
       options[:port] ||= 9292 
       
-      @adapter = Faye::RackAdapter.new(:mount => options[:mount], :timeout => 25 )
-
+      @adapter = Sidecar::Adapter.new(options)
+      
       yield(self) if block_given?
     end
     
@@ -26,7 +26,6 @@ module Sidecar
     end
 
     def start *args
-      puts "Listening" if debug?
       listen
     end
 
