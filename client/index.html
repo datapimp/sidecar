@@ -4,16 +4,6 @@
   <body>
     <div id="debug"></div>
     <div id="msg"></div>
-    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
-    <script type="text/javascript" src="http://localhost:9292/sidecar/faye.js"></script>
-    <script>
-      $(document).ready(function(){
-        var client = new Faye.Client('http://localhost:9292/sidecar'); 
-
-        client.subscribe('/assets', function(message) {
-          console.log("Assets", message )
-        });
-      });
-    </script>
+    <script type="text/javascript" src="sidecar.js"></script>
   </body>
 </html>

@@ -9,7 +9,7 @@ module Sidecar
       options[:port] ||= 9292 
       
       @adapter = Sidecar::Adapter.new(options)
-
+      
       yield(self) if block_given?
     end
     
