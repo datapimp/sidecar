@@ -20,6 +20,7 @@ GEM
       json (>= 1.0)
       rack (>= 1.0)
       thin (~> 1.2)
+    fsevents (0.1.1)
     git (1.2.5)
     hiredis (0.3.2)
     jeweler (1.6.4)
@@ -43,6 +44,7 @@ DEPENDENCIES
   bundler (~> 1.0.0)
   eventmachine
   faye
+  fsevents
   jeweler (~> 1.6.4)
   rcov
   shoulda

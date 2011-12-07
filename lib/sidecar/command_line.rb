@@ -29,12 +29,17 @@ Options:
         :contents       => nil,
         :config_path    => nil,
         :base_url       => nil,
-        :root_directory => nil,
+        :project_root   => Dir.getwd,
         :channel        => "client"
       }
 
       @option_parser = OptionParser.new do |opts|
         opts.on('-r','--root',)
+
+        opts.on('-W','--disable-watcher') do
+          @options[:disable_watcher] = true
+        end
+
         opts.on('-d','--debug','Enable debugging mode') do
           @options[:debug] = true
         end

@@ -1,6 +1,6 @@
 module Sidecar
   class Server
-    attr_accessor :adapter, :options
+    attr_accessor :adapter, :options, :watcher
     
     def initialize options={}
       @options= options
@@ -26,7 +26,16 @@ module Sidecar
     end
 
     def start *args
+      watch unless disable_watcher? 
       listen
+    end
+    
+    def watch
+      @watcher ||= Sidecar::Watcher.new( options )
+    end
+    
+    def disable_watcher?
+      options[:disable_watcher]
     end
 
     def debug?

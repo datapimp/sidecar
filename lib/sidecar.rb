@@ -1,9 +1,11 @@
 require 'rubygems'
 require 'eventmachine'
+require 'em-dir-watcher'
 require 'faye'
 
 require 'sidecar/adapter'
 require 'sidecar/handler'
+require 'sidecar/watcher'
 require 'sidecar/server'
 require 'sidecar/client'
 require 'sidecar/message'
