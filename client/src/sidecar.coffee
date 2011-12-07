@@ -2,24 +2,32 @@ class Sidecar
   constructor: (@options)->
     @bind "dependency_loaded", @dependency_loaded
     @load_dependencies()
-  
+
   boot: ()=>
     @booted = true
     @client = new Faye.Client('http://localhost:9292/sidecar')
     @client.subscribe "/assets", @onAsset
+
+    console.log "Sidecar Loaded"
   
   onAsset: ()->
     console.log "Asset Channel", arguments
 
   dependency_loaded: ( dependency )=>
     @loaded.push(dependency)
-
-    if @loaded.length == @dependencies.length and !@booted
+    
+    if @loaded.length is 3 and not @booted
       @boot()
+    else
+      console.log @loaded.length
   
   load_dependencies: ()->
-    @load( dependency ) for dependency in @dependencies
-  
+    _( @dependencies ).each (value, external_resource)=>
+      if value is "undefined"
+        @load(external_resource)
+      else
+        @dependency_loaded(external_resource)
+
   loaded: []
 
   load: (dependency)->
@@ -32,12 +40,11 @@ class Sidecar
 
     document.getElementsByTagName('head')[0].appendChild script
 
-  dependencies:[
-    'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-    'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.2.2/underscore-min.js',
-    'http://localhost:9292/sidecar/faye.js'
-  ],
-
+  dependencies:{
+    'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js': typeof(jQuery),
+    'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.2.2/underscore-min.js': typeof(_),
+    'http://localhost:9292/sidecar/faye.js':typeof(Faye)
+  },
   bind: (ev, callback, context) ->
     calls = @_callbacks or (@_callbacks = {})
     list = calls[ev] or (calls[ev] = [])

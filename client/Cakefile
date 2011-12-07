@@ -1,0 +1,26 @@
+{spawn, exec} = require 'child_process'
+
+option '-p', '--prefix [DIR]', 'set the installation prefix for `cake install`'
+
+fs = require "fs"
+path = require "fs"
+
+stdout_handler = (data)->
+  console.log data.toString().trim()
+
+build = (watch)->
+  console.log "Watching coffee scripts"
+
+  options = ['-c', '-o', 'javascripts', 'src']
+
+  options[0] = '-cw' if watch is true
+
+  coffee = spawn 'coffee', options 
+
+  coffee.stdout.on 'data', stdout_handler
+ 
+task 'build', 'build the project', (watch)->
+  build watch
+
+task 'watch', 'watch for changes and rebuild', ->
+  build true
