@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 gem 'faye'
 gem 'eventmachine'
+gem 'rack', '~> 1.2.1'
 
 group :development do
   gem "shoulda", ">= 0"

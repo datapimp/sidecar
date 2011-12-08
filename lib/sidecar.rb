@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'eventmachine'
-require 'em-dir-watcher'
 require 'faye'
 
 require 'sidecar/adapter'
