@@ -44,6 +44,5 @@ DEPENDENCIES
   eventmachine
   faye
   jeweler (~> 1.6.4)
-  rack (~> 1.2.1)
   rcov
   shoulda
